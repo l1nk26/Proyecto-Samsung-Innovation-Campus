@@ -1,8 +1,9 @@
-
+import creacion_de_ventana
 
 if __name__ == "__main__":
     print("lorem ipsum")
 
+    creacion_de_ventana.init()
     # inciar ventana con menu inicial
 
     # preguntar al usuario si quiere procesar un archivo o ingresar datos especificos

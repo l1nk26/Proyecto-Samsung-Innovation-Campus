@@ -53,19 +53,13 @@ class Home(tk.Frame):
         )
         button.grid(row=1,column=1)
 
-        button2 = ttk.Button(
-            marco_principal, 
-            text="Ingresar Varios Usuarios con CSV", 
-            command=lambda : print("hacer algo")
-        )
-        button2.grid(row=2,column=1)
 
         button3 = ttk.Button(
             marco_principal, 
             text="Salir", 
             command=lambda : sys.exit()
         )
-        button3.grid(row=3,column=1)
+        button3.grid(row=2,column=1)
 
 
 class Usuario(tk.Frame):
@@ -162,6 +156,15 @@ class Resultados(tk.Frame):
         self.controller = controller
         self.init_widgets()
 
+    def init_widgets(self):
+        marco_principal = tk.Frame(self)
+        marco_principal.configure(bg="#2611d5")
+        marco_principal.pack(
+            side=tk.TOP,
+            fill=tk.BOTH,
+            expand=True
+        )
+
 class Manager(tk.Tk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -189,7 +192,7 @@ class Manager(tk.Tk):
         frame.tkraise()
 
 
-if __name__=="__main__":
+def init():
     app = Manager()
     app.geometry("500x500")
     app.mainloop()
