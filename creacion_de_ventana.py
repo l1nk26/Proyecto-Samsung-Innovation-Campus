@@ -5,9 +5,29 @@ import sys
 from tkinter import filedialog
 #from PIL import ImageTk, Image
 
+import pdf_read
+
+
 #Constantes
 BACKGROUND = "#121212"
+BG_SECOND = "#dcdcdc"
 TEXT = "#84C9FB"
+
+
+#si tiene -1 no se, significa que no hay dato
+DATA_USUARIO = {
+    "glucosa": -1,
+    "glucosa basal": -1,
+    "glucosa postprandial": -1,
+    "hemoglobina glicosilada": -1,
+    "nombreCompleto" : "",
+    "edad" : -1,
+    "familia" : False,
+    "peso" : -1,
+    "orinaMucho" : False,
+    "muchaSed" : False,
+    "doleresCabeza": False,
+}
 
 
 #Screens
@@ -129,6 +149,17 @@ class Formula(tk.Frame):
         super().__init__(parent)
         self.configure()
         self.controller = controller
+
+        #variables
+        self.nombreCompleto = tk.StringVar(self)
+        self.edad = tk.StringVar(self)
+        self.glucosa = tk.IntVar(self, value=0)
+        self.familia = tk.BooleanVar(self, value=False)
+        self.peso = tk.IntVar(self)
+        self.orinaMucho = tk.BooleanVar(self, value=False)
+        self.muchaSed = tk.BooleanVar(self, value=False)
+        self.doleresCabeza = tk.BooleanVar(self, value=False)
+
         self.init_widgets()
 
     def move_to_back_home(self):
@@ -150,13 +181,38 @@ class Formula(tk.Frame):
             side=tk.LEFT,
         )
 
-        marco_principal = tk.Frame(self)
-        marco_principal.configure(height=100,width=100)
-        marco_principal.pack(
+        nombre_div = tk.Frame(self)
+        nombre_div.configure(bg=BG_SECOND)
+        nombre_div.pack(
             side=tk.TOP,
             fill=tk.BOTH,
-            expand=True
+            expand=True,
+            padx=30,
+            pady=30,
         )
+
+        ttk.Label(
+            nombre_div, 
+            text="Nombre Completo",
+            background=BG_SECOND
+        ).pack(
+            side=tk.TOP,
+            fill=tk.X,
+            expand=True,
+            padx=20,
+        )
+
+        """ tk.Entry(
+            nombre_div,
+            fg="white",
+            bg="black",
+            justify="center",
+            textvariable=entrada,
+        ).pack(
+            fill=tk.BOTH,
+            expand=True,
+        ) """
+
 
         
         
@@ -169,11 +225,17 @@ class DataPDF(tk.Frame):
         self.controller = controller
         self.init_widgets()
 
+    def move_to_resul(self):
+        self.controller.show_frame(Resultados)
+
     def get_file_path(self):
         file_path = filedialog.askopenfilename(filetypes=[("PDF files", "*.pdf")])
         if file_path:
             print(f"Selected file path: {file_path}")
             # Puedes hacer algo con el path del archivo aquí
+            print(pdf_read.pdf_read(file_path))
+            self.move_to_resul()
+
         else:
             print("No file selected")
 
@@ -230,6 +292,7 @@ class Manager(tk.Tk):
         self.title("Yo Nunca: The Game")
         conteiner = tk.Frame(self)
         self.mode = "Normal"
+
         conteiner.pack(
             side=tk.TOP,
             fill=tk.BOTH,

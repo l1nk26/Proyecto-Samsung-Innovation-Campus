@@ -1,5 +1,7 @@
 import creacion_de_ventana
 
+# para rellenar el requirements.txt se usa "pip freeze > requirements.txt"
+
 if __name__ == "__main__":
     print("lorem ipsum")
 
