@@ -158,7 +158,8 @@ class Formula(tk.Frame):
             expand=True
         )
 
-        Label(marco_principal,text="essxee").pack()
+        
+        
 
 #ventana que pide el archivo .pdf
 class DataPDF(tk.Frame):
