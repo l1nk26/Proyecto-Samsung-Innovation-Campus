@@ -11,7 +11,7 @@ TEXT = "#84C9FB"
 
 
 #Screens
-
+#ventana Home
 class Home(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
@@ -61,7 +61,7 @@ class Home(tk.Frame):
         )
         button3.grid(row=2,column=1)
 
-
+#ventana de para dar la opcion de datos por pdf o por formulario
 class Usuario(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
@@ -75,7 +75,26 @@ class Usuario(tk.Frame):
     def move_to_dataPDF(self):
         self.controller.show_frame(DataPDF)
 
+    def move_to_back_home(self):
+        self.controller.show_frame(Home)
+
     def init_widgets(self):
+
+        header = tk.Frame(self)
+        header.configure(height=100)
+        header.pack(
+            side=tk.TOP,
+            fill=tk.X,
+        )
+        ttk.Button(
+            header,
+            text="<=",
+            command=self.move_to_back_home,
+        ).pack(
+            side=tk.LEFT,
+        )
+
+
         marco_principal = tk.Frame(self)
         marco_principal.configure(height=100,width=100)
         marco_principal.pack(
@@ -83,6 +102,7 @@ class Usuario(tk.Frame):
             fill=tk.BOTH,
             expand=True
         )
+
         ttk.Button(
             marco_principal, 
             text="Ingresar Datos Del Usuario", 
@@ -103,7 +123,7 @@ class Usuario(tk.Frame):
             expand=True,
         )
 
-
+#ventana con todo el formulario 
 class Formula(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
@@ -111,7 +131,25 @@ class Formula(tk.Frame):
         self.controller = controller
         self.init_widgets()
 
+    def move_to_back_home(self):
+        self.controller.show_frame(Usuario)
+
     def init_widgets(self):
+
+        header = tk.Frame(self)
+        header.configure(height=100)
+        header.pack(
+            side=tk.TOP,
+            fill=tk.X,
+        )
+        ttk.Button(
+            header,
+            text="<=",
+            command=self.move_to_back_home,
+        ).pack(
+            side=tk.LEFT,
+        )
+
         marco_principal = tk.Frame(self)
         marco_principal.configure(height=100,width=100)
         marco_principal.pack(
@@ -122,7 +160,7 @@ class Formula(tk.Frame):
 
         Label(marco_principal,text="essxee").pack()
 
-
+#ventana que pide el archivo .pdf
 class DataPDF(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
@@ -138,7 +176,26 @@ class DataPDF(tk.Frame):
         else:
             print("No file selected")
 
+    def move_to_back_home(self):
+        self.controller.show_frame(Usuario)
+
     def init_widgets(self):
+
+        header = tk.Frame(self)
+        header.configure(height=100)
+        header.pack(
+            side=tk.TOP,
+            fill=tk.X,
+        )
+        ttk.Button(
+            header,
+            text="<=",
+            command=self.move_to_back_home,
+        ).pack(
+            side=tk.LEFT,
+        )
+
+
         marco_principal = tk.Frame(self)
         marco_principal.pack(
             side=tk.TOP,
@@ -149,6 +206,7 @@ class DataPDF(tk.Frame):
         button = tk.Button(marco_principal, text="Select PDF File", command=self.get_file_path)
         button.pack(pady=20)
 
+#ventana que mostrara los resultados 
 class Resultados(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
