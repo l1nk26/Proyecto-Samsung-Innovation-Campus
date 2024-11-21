@@ -11,6 +11,7 @@ import pdf_read
 #Constantes
 BACKGROUND = "#121212"
 BG_SECOND = "#dcdcdc"
+BG_TEXTINPUT = "#dadada"
 TEXT = "#84C9FB"
 
 
@@ -151,19 +152,28 @@ class Formula(tk.Frame):
         self.controller = controller
 
         #variables
-        self.nombreCompleto = tk.StringVar(self)
-        self.edad = tk.StringVar(self)
-        self.glucosa = tk.IntVar(self, value=0)
-        self.familia = tk.BooleanVar(self, value=False)
-        self.peso = tk.IntVar(self)
-        self.orinaMucho = tk.BooleanVar(self, value=False)
-        self.muchaSed = tk.BooleanVar(self, value=False)
-        self.doleresCabeza = tk.BooleanVar(self, value=False)
+        self.data = {
+            "glucosa": tk.IntVar(self, value=-1),
+            "glucosa basal": tk.IntVar(self, value=-1),
+            "glucosa postprandial": tk.IntVar(self, value=-1),
+            "hemoglobina glicosilada": tk.IntVar(self, value=-1),
+            "nombreCompleto" : tk.StringVar(self, value=""),
+            "edad" : tk.IntVar(self, value=-1),
+            "familia" : tk.BooleanVar(self, value=False),
+            "peso" : tk.IntVar(self, value=-1),
+            "orinaMucho" : tk.BooleanVar(self, value=False),
+            "muchaSed" : tk.BooleanVar(self, value=False),
+            "doleresCabeza": tk.BooleanVar(self, value=False),
+        }
 
         self.init_widgets()
 
     def move_to_back_home(self):
         self.controller.show_frame(Usuario)
+
+    def mostrar_data(self):
+        for i, v in self.data.items():
+            print(i,v.get())
 
     def init_widgets(self):
 
@@ -185,10 +195,10 @@ class Formula(tk.Frame):
         nombre_div.configure(bg=BG_SECOND)
         nombre_div.pack(
             side=tk.TOP,
-            fill=tk.BOTH,
-            expand=True,
+            fill=tk.X,
+            expand=False,
             padx=30,
-            pady=30,
+            pady=10,
         )
 
         ttk.Label(
@@ -200,18 +210,95 @@ class Formula(tk.Frame):
             fill=tk.X,
             expand=True,
             padx=20,
+            pady=10,
         )
 
-        """ tk.Entry(
+        tk.Entry(
             nombre_div,
-            fg="white",
-            bg="black",
+            bg=BG_TEXTINPUT,
             justify="center",
-            textvariable=entrada,
+            textvariable=self.data["nombreCompleto"],
         ).pack(
-            fill=tk.BOTH,
+            side=tk.TOP,
+            fill=tk.X,
             expand=True,
-        ) """
+            padx=20,
+            pady=10,
+        )
+
+
+        edad_div = tk.Frame(self)
+        edad_div.configure(bg=BG_SECOND)
+        edad_div.pack(
+            side=tk.TOP,
+            fill=tk.X,
+            expand=False,
+            padx=30,
+            pady=10,
+        )
+
+        ttk.Label(
+            edad_div, 
+            text="Edad",
+            background=BG_SECOND
+        ).pack(
+            side=tk.TOP,
+            fill=tk.X,
+            expand=True,
+            padx=20,
+            pady=10,
+        )
+
+        tk.Entry(
+            edad_div,
+            bg=BG_TEXTINPUT,
+            justify="center",
+            textvariable=self.data["edad"],
+        ).pack(
+            side=tk.TOP,
+            fill=tk.X,
+            expand=True,
+            padx=20,
+            pady=10,
+        )
+
+        pregunta_glucosa_div = tk.Frame(self)
+        pregunta_glucosa_div.configure(bg=BG_SECOND)
+        pregunta_glucosa_div.pack(
+            side=tk.TOP,
+            fill=tk.X,
+            expand=False,
+            padx=30,
+            pady=10,
+        )
+
+        ttk.Label(
+            pregunta_glucosa_div, 
+            text="¿Sabes tu valor de normal de glucosa en la sangren?",
+            background=BG_SECOND
+        ).pack(
+            side=tk.TOP,
+            fill=tk.X,
+            expand=True,
+            padx=20,
+            pady=10,
+        )
+
+        tk.Entry(
+            pregunta_glucosa_div,
+            bg=BG_TEXTINPUT,
+            justify="center",
+            textvariable=self.data["glucosa"],
+        ).pack(
+            side=tk.TOP,
+            fill=tk.X,
+            expand=True,
+            padx=20,
+            pady=10,
+        )
+
+
+        ttk.Button(self, text="aa", command=self.mostrar_data).pack()
 
 
         
